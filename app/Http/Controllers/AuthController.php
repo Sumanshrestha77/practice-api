@@ -21,8 +21,8 @@ class AuthController extends Controller
         $token = $user->createToken($request->name);
         return [
             'user' => $user,
-            'token' => $token->plainTextToken
-            // but this pass will give as object with properties
+            'token' => $token->plainTextToken,
+            'message' => 'waiting for inspiration eh?'
         ];
     }
     public function login(Request $request)
@@ -33,8 +33,14 @@ class AuthController extends Controller
             // for this confirmation to work, we need to have 
             // another feild name which has password_confirmation
         ]);
-        // for web application
-        Au
+        // for web application use auth fascad
+        // Auth::attempt(['email'=>$email, 'password'=>$password]);
+
+        // for building the api
+        $user = User::where('email', $request->email)->first();
+        // if(!userHash::check($request->password, $user->password)){
+
+        // }
     }
     public function logout(Request $request)
     {
